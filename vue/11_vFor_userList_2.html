@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <title>v-for:userList 2</title>
+</head>
+<body>
+    <div id="app">
+        <div class="container">
+            <input type="text" v-model="newName" placeholder="請輸入姓名">
+            <input type="text" v-model="newEmail" placeholder="請輸入信箱">
+            <input type="text" v-model="newPhone" placeholder="請輸入電話">
+            <button type="button" class="btn btn-primary"
+                    @click="addUser">新增資料</button>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">姓名</th>
+                        <th scope="col">信箱</th>
+                        <th scope="col">電話</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(user, index) in users"
+                        :key="index">
+                        <th scope="row">{{ index + 1 }}</th>
+                        <td>{{ user.name }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.phone }}</td>
+                        <td><button type="button" class="btn btn-primary"
+                                @click="deleteUser(index)">刪除</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script>
+        let app = new Vue({
+            el: "#app",
+            data: {
+                newName: "",
+                newPhone: "",
+                newEmail: "",
+                users: [
+                    {
+                        name: "John",
+                        email: "john@gmail.com",
+                        phone: "0900000000",
+                    },
+                ],
+            },
+            methods: {
+                addUser() {
+                    let user = {
+                        name: this.newName,
+                        email: this.newPhone,
+                        phone: this.newEmail,
+                    }
+                    this.users.push(user);
+                    this.newName = "";
+                    this.newPhone = "";
+                    this.newEmail = "";
+                },
+                deleteUser(index) {
+                    this.users.splice(index, 1);
+                },
+                
+            },
+        })
+    </script>
+</body>
+</html>

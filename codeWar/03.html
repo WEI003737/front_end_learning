@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function cakes(recipe, available) {
+            let availableKey = Object.keys(available);
+            let recipeKey = Object.keys(recipe);
+            let result = 0;
+            let amount = [];
+            
+            if (availableKey.length < recipeKey.length) {return result;}
+            for (let i=0; i<recipeKey.length; i++) {
+                if (recipeKey[i] in available) {
+                    isEnough = available[recipeKey[i]] / recipe[recipeKey[i]];
+                    amount.push(isEnough);
+                } else {
+                    result = 0;
+                    return;
+                }
+            }
+            result = parseInt(Math.min(...amount));
+            return result;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pseudo element</title>
+    <style>
+        .box{
+            position: relative;
+        }
+        .tri{
+            position: absolute;
+            border-radius: 5px 5px 0 0;
+            width: 50px;
+            height: 50px;
+            top: 20px;
+            left: 25px;
+            background: #ffae00;
+        }
+        .tri::after{
+            content: "";
+            position: absolute;
+            top: 50px;
+            width: 0px;
+            height: 0px;
+            border-left: 25px solid transparent;
+            border-right: 25px solid transparent;
+            border-top: 20px solid #ffae00;
+        }
+        .tri2,
+        .tri3{
+            position: absolute;
+            border-radius: 5px 5px 0 0;
+            width: 50px;
+            height: 50px;
+            top: 20px;
+            left: 100px;
+            background: #ffae00;
+        }
+        .tri2::after{
+            content: "";
+            position: absolute;
+            top: 50px;
+            left: 25px;
+            width: 0px;
+            height: 0px;
+            border-left: 25px solid transparent;
+            border-top: 20px solid #ffae00;
+        }
+        .tri3::after{
+            content: "";
+            position: absolute;
+            top: 50px;
+            width: 0;
+            height: 0px;
+            border-right: 25px solid transparent;
+            border-top: 20px solid #ffae00;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <div class="tri"></div>
+        <div class="tri2"></div>
+        <div class="tri3"></div>
+    </div>
+    
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>canvas</title>
+    <style>
+        .wrapper{
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+
+        }
+        canvas{
+            border: 1px solid #ccc;
+            margin: 0 auto;
+            position: absolute;
+            left: 0;
+            right: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <h1>Canvas</h1>
+        <canvas id="canvas" width="300px" height="600px"></canvas>
+    </div>
+    <script>
+        
+        // <canvas>只支援一種原始圖形，矩形。所有的圖形都必須由一或多個繪圖路徑構成
+        /*
+        x, y代表從原點出發的座標位置，width, height代表矩形的寬高
+        fillRect(x, y, width, height) 填滿的矩形
+        strokeRect(x, y, width, height) 矩形的邊框
+        clearRect(x, y, width, height) 清除矩形區域內的內容，使其變為全透明
+        */
+        function drawRect() {
+            const canvas = document.querySelector('canvas');
+            if(canvas.getContext) {
+                const ctx = canvas.getContext('2d');
+
+                ctx.fillRect(25, 25, 100, 100);
+                ctx.clearRect(45, 45, 60, 60);
+                ctx.strokeRect(50, 50, 50, 50);
+            } 
+        }
+        drawRect();
+
+        /*
+        使用路徑 (path) 來畫圖形需要多一點步驟，一開始先產生路徑，然後用繪圖指令畫出路徑，然後再結束路徑，一旦路徑產生後便可以用畫筆或填滿方式來渲染生成，這裡是一些可用函數:
+
+        beginPath()
+        產生一個新路徑，產生後再使用繪圖指令來設定路徑
+        closePath()
+        閉合路徑好讓新的繪圖指令來設定路徑
+        moveTo(x, y)
+        移動畫筆到指定的(x, y)座標點
+        lineTo(x, y)
+        從目前繪圖點畫一條直線到指定的(x, y)座標點
+        arc(x, y, radius, startAngle, endAngle, anticlockwise)
+        畫一個弧形
+        stroke()
+        畫出圖形的邊框
+        fill()
+        填滿路徑內容區域來產生圖形
+        */
+
+        function drawTri() {
+            const canvas = document.querySelector('canvas');
+            if(canvas.getContext) {
+                const ctx = canvas.getContext('2d');
+
+                ctx.beginPath();
+                ctx.moveTo(75, 75);
+                ctx.lineTo(100,100);
+                ctx.lineTo(100,50);
+                ctx.fill();
+            } 
+        }
+        drawTri();
+
+        function drawFace() {
+            const canvas = document.getElementById('canvas');
+            if (canvas.getContext){
+                const ctx = canvas.getContext('2d');
+
+                ctx.beginPath();
+                ctx.arc(200,75,50,0,Math.PI*2,true); // Outer circle
+                ctx.moveTo(235,75);
+                ctx.arc(200,75,35,0,Math.PI,false);   // Mouth (clockwise)
+                ctx.moveTo(190,65);
+                ctx.arc(185,65,5,0,Math.PI*2,true);  // Left eye
+                ctx.moveTo(220,65);
+                ctx.arc(215,65,5,0,Math.PI*2,true);  // Right eye
+                ctx.stroke();
+            }
+        }
+        drawFace();
+
+        function drawTri2() {
+            const canvas = document.getElementById('canvas');
+            if (canvas.getContext){
+                const ctx = canvas.getContext('2d');
+
+                // Filled triangle
+                ctx.beginPath();
+                ctx.moveTo(25,150);
+                ctx.lineTo(105,150);
+                ctx.lineTo(25,230);
+                ctx.fill();
+
+                // Stroked triangle
+                ctx.beginPath();
+                ctx.moveTo(125,250);
+                ctx.lineTo(125,170);
+                ctx.lineTo(45,250);
+                ctx.closePath();
+                ctx.stroke();
+            }
+        }
+        drawTri2();
+
+        function drawCircle() {
+            const canvas = document.getElementById('canvas');
+            if (canvas.getContext){
+                const ctx = canvas.getContext('2d');
+
+                for(var i=0;i<4;i++){
+                    for(var j=0;j<3;j++){
+                        ctx.beginPath();
+                        var x = 50+j*50; // x coordinate
+                        var y = 325+i*50; // y coordinate
+                        var radius = 20; // Arc radius
+                        var startAngle = 0;                     // Starting point on circle
+                        var endAngle       = Math.PI+(Math.PI*j)/2; // End point on circle
+                        var anticlockwise  = i%2==0 ? false : true; // clockwise or anticlockwise
+
+                        ctx.arc(x, y, radius, startAngle, endAngle, anticlockwise);
+
+                        if (i>1){
+                            ctx.fill();
+                        } else {
+                            ctx.stroke();
+                        }
+                    }
+                }
+            }
+        }
+        drawCircle();
+    </script>
+</body>
+</html>

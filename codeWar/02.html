@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+// Test.assertEquals(seven(times(five())), 35);
+// Test.assertEquals(four(plus(nine())), 13);
+// Test.assertEquals(eight(minus(three())), 5);
+// Test.assertEquals(six(dividedBy(two())), 3);
+
+        function toCount(num1,formula){
+                countResult = 0;
+                spilt = formula.split("");
+                count = formula[0]
+                num2 = parseInt(formula[1]);
+                switch(count){
+                    case "+":
+                    countResult =  num1 + num2;
+                    break;
+                    case "-":
+                    countResult =  num1 - num2;
+                    break;
+                    case "*":
+                    countResult =  num1 * num2;
+                    break;
+                    case "/":
+                    countResult =  num1 / num2;
+                    break;
+                }
+                return countResult
+        }
+        function zero(formula = "") {
+            let num = 0;
+            let result = 0;
+            if(formula.length){
+                result = toCount(num,formula)
+            }
+            return result
+            }
+        function one() {
+            let num = 1;
+            let result = 1;
+            if(formula.length){
+                result = toCount(num,formula)
+            }
+            return result
+        }
+        function two() {
+            let num = 2;
+            let result = 2;
+            if(formula.length){
+                result = toCount(num,formula)
+            }
+            return result
+        }
+        function three() {
+            let num = 3;
+            let result = 3;
+            if(formula.length){
+                result = toCount(num,formula)
+            }
+            return result
+        }
+        function four() {
+            let num = 4;
+            let result = 4;
+            if(formula.length){
+                result = toCount(num,formula)
+            }
+            return result
+        }
+        function five() {
+            let num = 5;
+            let result = 5;
+            if(formula.length){
+                result = toCount(num,formula)
+            }
+            return result
+        }
+        function six() {
+            let num = 6;
+            let result = 6;
+            if(formula.length){
+                result = toCount(num,formula)
+            }
+            return result
+        }
+        function seven() {
+            let num = 7;
+            let result = 7;
+            if(formula.length){
+                result = toCount(num,formula)
+            }
+            return result
+        }
+        function eight() {
+            let num = 8;
+            let result = 8;
+            if(formula.length){
+                result = toCount(num,formula)
+            }
+            return result
+        }
+        function nine() {
+            let num = 9;
+            let result = 9;
+            if(formula.length){
+                result = toCount(num,formula)
+            }
+            return result
+        }
+
+        function plus(num) {return "+" + num}
+        function minus(num) {return "-" + num}
+        function times(num) {return "*" + num}
+        function dividedBy(num) {return "/" + num}
+
+        // 別人的答案
+
+        function zero(func)   { return func ? func(0) : 0; };
+        function one(func)    { return func ? func(1) : 1; };
+        function two(func)    { return func ? func(2) : 2; };
+        function three(func)  { return func ? func(3) : 3; };
+        function four(func)   { return func ? func(4) : 4; };
+        function five(func)   { return func ? func(5) : 5; };
+        function six(func)    { return func ? func(6) : 6; };
+        function seven(func)  { return func ? func(7) : 7; };
+        function eight(func)  { return func ? func(8) : 8; };
+        function nine(func)   { return func ? func(9) : 9; };
+
+        function plus( b )      { return function( a ) { return a + b; }; };
+        function minus( b )     { return function( a ) { return a - b; }; };
+        function times( b )     { return function( a ) { return a * b; }; };
+        function dividedBy( b ) { return function( a ) { return a / b; }; };
+    </script>
+</body>
+</html>

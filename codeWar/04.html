@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- pickPeaks([3, 2, 3, 6, 4, 1, 2, 3, 2, 1, 2, 3]) should return {pos: [3, 7], peaks: [6, 3]} -->
+    <!-- pickPeaks([1, 2, 2, 2, 1]) returns {pos: [1], peaks: [2]} -->
+    <script>
+        var ar1 = [2,3,4,6,6,6,6,5,4,3,3,3,5];
+        var ar2 = [2,3,4,6,6,6,6,7,4,7,7,7,5];
+
+        /*自己寫的*/
+        // function pickPeaks(arr){
+        //     let result = {},
+        //         pos = [],
+        //         peaks = [];
+                
+        //     for (let i=1; i<arr.length-1; i++) {
+        //         if (arr[i] > arr[i-1] && arr[i]>arr[i+1]) {
+        //             pos.push(i);
+        //             peaks.push(arr[i]);
+        //         }
+        //         else if (arr[i] > arr[i-1] && arr[i] == arr[i+1]) {
+        //             for (let k=i; k<arr.length-2; k++) {
+
+        //                 if (arr[k+1] == arr[k] && arr[k+1] < arr[k+2]) {
+        //                     k = (arr.length-2);
+        //                 }
+        //                 else if (arr[k+1] == arr[k] && arr[k+1] > arr[k+2]) {
+        //                     if (pos.indexOf(i) == -1) {
+        //                         peaks.push(arr[i]);
+        //                         pos.push(i);
+        //                         k = (arr.length-2);
+        //                     }
+        //                 }
+        //             }
+        //         }
+        //     }
+        //     result["pos"] = pos;
+        //     result["peaks"] = peaks;
+
+        //     return result;
+        // }
+        
+        /*自己寫的簡化*/
+        function pickPeaks(arr){
+            let result = {"pos" : [], "peaks" : []},
+                i = 1;
+
+            arr.forEach((number) => {
+                if (arr[i] > arr[i-1] && arr[i]>arr[i+1]) {
+                    result["pos"].push(i);
+                    result["peaks"].push(arr[i]);
+                } else if (arr[i] > arr[i-1] && arr[i] == arr[i+1]) {
+                    let arrForPeaksCheck = arr.slice(i);
+                    let k = i;
+                    arrForPeaksCheck.forEach((number) => {
+                        if (arr[k+1] == arr[k] && arr[k+1] < arr[k+2]) {
+                            k = arr.length;
+                        }
+                        else if (arr[k+1] == arr[k] && arr[k+1] > arr[k+2]) {
+                            if (result["pos"].indexOf(i) == -1) {
+                                result["peaks"].push(arr[i]);
+                                result["pos"].push(i);
+                                k = arr.length;
+                            }
+                        }
+                        k++;
+                    })
+                }
+                i++;
+            })
+            return result;
+        }
+
+        /*別人寫的*/
+        // function pickPeaks(arr){
+        //     var result = {pos: [], peaks: []};
+        //     if(arr.length > 2) {
+        //         var pos = -1;
+        //         for(var i=1; i<arr.length;i++){
+        //         if(arr[i] > arr[i-1]) {
+        //             pos = i;
+        //         } else if(arr[i] < arr[i-1] && pos != -1) {
+        //             result.pos.push(pos);
+        //             result.peaks.push(arr[pos]);
+        //             pos = -1;
+        //         }
+        //         }
+        //     }
+        //     return result;
+        // }
+    </script>
+</body>
+</html>

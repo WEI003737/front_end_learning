@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/normalize.css">
+    <title>grid areas</title>
+    <style>
+        /*
+        grid-template-areas : 劃分區域並命名
+        grid-area: 指派被命名的區域
+        */
+
+        img{
+            width: 60px;
+        }
+        .box{
+            margin: 20px;
+        }
+        .box1{
+            height: 600px;
+            display: grid;
+            background: lightcoral;
+            grid-template-rows: 1fr 1fr 1fr;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            grid-template-areas: 
+            "h h h h"
+            "a a a n"
+            "f f f f";
+        }
+        .box .header{
+            grid-area: h;
+            background: lightgreen;
+        }
+       
+    </style>
+</head>
+<body>
+    <div class="box box1">
+        <div class="header"></div>
+       
+    </div>
+    
+</body>
+</html>

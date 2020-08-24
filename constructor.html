@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>constructor</title>
+</head>
+<body>
+    <script>
+        /* 封裝 資料 & method */
+        // 建構子函式 (類別?)
+        function Person(first, last, age, gender, interests) {
+            this.name = {
+                first,
+                last,
+            };
+            this.age = age;
+            this.gender = gender;
+            this.interests = interests;
+            this.bio = function() {
+                let synonym,
+                    interestsIntro = [],
+                    interestsLength = this.interests.length;
+                switch (this.gender) {
+                    case "male":
+                        synonym = "He";
+                        break;
+                    case "female":
+                        synonym = "She";
+                        break;
+                }
+                switch (interestsLength) {
+                    case 0:
+                        interestsIntro = "nothing";
+                        break;
+                    case 1:
+                        interestsIntro = interests[0];
+                        break;
+                    case 2:
+                        interestsIntro = interests[0] + " and " + interests[1];
+                        break;
+                    default:
+                        for (let i=0; i<interestsLength-1; i++) {
+                            interestsIntro.push(" " + this.interests[i]);
+                        }
+                        interestsIntro = interestsIntro + " and " + this.interests[interestsLength-1] ;
+                        break;
+                }
+                alert(this.name.first + " " + this.name.last + " is " + this.age + " years old. " + synonym + " likes " + interestsIntro + " .")
+            };
+            this.greeting = function() {
+                alert("Hi, I\'m " + this.name.first + ".");
+            }
+        };
+
+        
+        // 建立物件實例
+        // new:告知瀏覽器「建立新的物件實例」，函數傳入參數
+        var p1 = new Person("John", "Smith", 28, "male", ["music", "swimming"]);
+        var p2 = new Person("Kathy", "Kim", 25, "female", ["gardening", "painting", "singing", "dancing"]);
+        var p3 = Object.create(p1);
+
+        // 每個物件實例都具備 1 個建構子屬性，指向「用以建立實例」的原始建構子函式
+        // console.log(p1.constructor);
+
+        // 許多物件定義較常見的模式，就是在建構子中定義屬性，而在原型中定義函式。這樣一來，建構子只有屬性定義；函式則切分到不同的區塊，讓整個程式碼較清楚易讀
+
+        function Teacher(first, last, age, gender, interests, subject) {
+            Person.call(this, first, last, age, gender, interests);
+            this.subject = subject;
+        };
+        // 繼承
+        Teacher.prototype = Object.create(Person.prototype);
+        Teacher.prototype.constructor = Teacher;
+        Teacher.prototype.greeting = function() {
+            var prefix;
+
+            if(this.gender === 'male' || this.gender === 'Male' || this.gender === 'm' || this.gender === 'M') {
+                prefix = 'Mr.';
+            } else if(this.gender === 'female' || this.gender === 'Female' || this.gender === 'f' || this.gender === 'F') {
+                prefix = 'Mrs.';
+            } else {
+                prefix = 'Mx.';
+            }
+
+            alert('Hello. My name is ' + prefix + ' ' + this.name.last + ', and I teach ' + this.subject + '.');
+        };
+
+        var t1 = new Teacher("David", "Griffiths", 35, "male", ["football", "cookery"], "mathematics");
+
+        // 基於 JavaScript 運作的方式 (如原型鍊等)，物件之間的功能共享一般稱為「委託 (Delegation)」，即特定物件將功能委託至通用物件類型。「委託」其實比繼承更精確一點。因為「所繼承的功能」並不會複製到「進行繼承的物件」之上，卻是保留在通用物件之中。
+    </script>
+</body>
+</html>

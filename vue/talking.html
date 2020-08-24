@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <!-- bootstrap -->
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <title>component props</title>
+    <style>
+        .object_fit{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .talk_area{
+            width: 320px;
+            height: 640px;
+            padding: 10px;
+            background: #ccc;
+            border-radius: 8px;
+            overflow: auto;
+        }
+        .message .babbles{
+            padding: 0 .5rem;
+            border-radius: 8px;
+            background: #fff;
+            max-width: 90%;
+            word-wrap: break-word;
+        }
+        .typing{
+            width: 100%;
+            right: 0;
+            bottom: 0;
+            padding: 0 .5rem .5rem;
+        }
+        .typing input{
+            border-radius: 8px 0 0 8px;
+            border: 0;
+            flex: 3 3 0;
+        }
+        .typing input:focus{
+            outline: none;
+        }
+        .typing button{
+            border-radius: 0 8px 8px 0;
+            flex: 1 1 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="container">
+        <div class="talk_area m-auto position-relative">
+            <div v-for="(sandMessage, index) in sandMessages"
+                 :key="index">
+                <my_component :sand-message="sandMessage"></my_component>
+            </div>
+            <div class="position-absolute typing d-flex">
+                <input type="text"
+                       v-model="message"
+                       @keyup.enter="submit">
+                <button type="button"
+                        class="btn btn-primary"
+                        @click="submit">submit</button>
+            </div>
+        </div>
+        
+       
+        
+    </div>
+
+    <!-- vue -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+    
+    // 全域註冊
+    Vue.component("my_component", {
+        template: `
+            <div class="message d-flex mb-1">
+                <p>user:</p>
+                <p class="babbles ml-1">{{ sandMessage }}</p>
+            </div>
+        `,
+        props: ["sand-message"],
+
+    })
+
+        const app = new Vue({
+            el: "#app",
+            data: {
+               message: "",
+               sandMessages: [],
+               talkings: [],
+            },
+            methods: {
+                submit () {
+                    this.sandMessages.push(this.message);
+                    this.message = "";
+                    localStorage.setItem("talkings", JSON.stringify(this.sandMessages));
+                },
+            },
+            mounted () {
+                localStorage.getItem("talkings") ?
+                this.sandMessages = JSON.parse(localStorage.getItem("talkings")) : this.talkings = [];
+            }
+        })
+    </script>
+</body>
+</html>

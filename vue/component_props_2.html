@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <!-- bootstrap -->
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <title>component props</title>
+    <style>
+        .pic{
+            width: 100%;
+            height: 100%;
+        }
+        .object_fit{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="container">
+        <div class="row">
+            <div class="col-sm-4"
+                 v-for="(card, index) in cards"
+                 :key="index">
+                <my_component :card="card"></my_component>
+            </div>
+        </div>
+        
+    </div>
+
+    <!-- vue -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+    
+    // 全域註冊
+    Vue.component("my_component", {
+        template: `
+        <div class="card text-center">
+            <h5>{{ card.title }}</h5>
+            <div class="pic">
+                <img class="object_fit"
+                     :src="card.pic">
+            </div>
+            <button type="button"
+                    class="btn btn-primary">{{ card.btn }}</button>
+        </div>
+        `,
+        props: ["card"],
+        data () {
+            return {
+
+            }
+        },
+
+    })
+
+        const app = new Vue({
+            el: "#app",
+            data: {
+                cards: [{
+                    title: "Taipei",
+                    btn: "btn1",
+                    pic: "images/taipei.jpg",
+                },
+                {
+                    title: "New Taipei",
+                    btn: "btn2",
+                    pic: "images/new_taipei.jpg",
+                }
+                ]
+            }
+        })
+    </script>
+</body>
+</html>

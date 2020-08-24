@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>v-for:productFilter</title>
+</head>
+<body>
+    <div id="app">
+        <input type="text"
+               v-model="priceSearch"
+               @keyup.enter="filterData = priceFilter">
+        <button @click="filterData = priceFilter">篩選</button>
+        <p>價錢小於: {{ priceSearch }}</p>
+        <ul>
+            <li v-for="(item, index) in filterData"
+                :key="index">
+                item: {{ item.item }} price: ${{ item.price }}
+            </li>
+        </ul>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script>
+        let app = new Vue({
+            el: "#app",
+            data: {
+                products: [
+                    {
+                        item: "book",
+                        price: 450,
+                    },
+                    {
+                        item: "bottle",
+                        price: 100,
+                    },
+                    {
+                        item: "mask",
+                        price: 3,
+                    },
+                    {
+                        item: "carpet",
+                        price: 520,
+                    },
+                    {
+                        item: "umbralla",
+                        price: 620,
+                    },
+                    {
+                        item: "sampoo",
+                        price: 360,
+                    },
+                    {
+                        item: "conditioner",
+                        price: 280,
+                    },
+                ],
+                priceSearch: "",
+                filterData: [],
+            },
+            computed: {
+                priceFilter() {
+                    let price = this.priceSearch;
+                    let itemFilter = this.products.filter((item) => {
+                        return item.price < price;
+                    })
+                    return itemFilter;
+                },
+            },
+            mounted() {
+                this.filterData = this.products;
+            },
+        })
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <title>filters</title>
+</head>
+<body>
+    <div id="app">
+        <div class="container">
+           <label for="message"></label>
+           <input name="message" type="text" v-model="message">
+           <h3>capitalize: {{ message | capitalize }}</h3>
+
+           <label for="centimeter"></label>
+           <input name="centimeter" type="text" v-model="centimeter" >
+           <h3>change cm to km: {{ centimeter | toKilo }} km</h3>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script>
+        let app= new Vue({
+            el: "#app",
+            data: {
+                message: "",
+                centimeter: 0,               
+            },
+            filters: {
+                capitalize(value) {
+                    if (!value) return ''
+                    value = value.toString()
+                    return value.charAt(0).toUpperCase() + value.slice(1)
+                },
+                toKilo(value){
+                    return value *= 0.001;
+                }
+
+            }
+        })
+    </script>
+    
+</body>
+</html>

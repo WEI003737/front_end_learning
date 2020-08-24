@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <title>v-model</title>
+    <style>
+        
+    </style>
+</head>
+<body>
+    <div id="app" class="container">
+        <div class="py-2">
+            <input type="text" v-model="message">
+        </div>
+        <div class="py-2">
+            <input type="checkbox" v-model="checked">
+        </div>
+        <div class="py-2">
+            <ul class="list-unstyled">
+                <li><input type="checkbox" v-model="checkName" value="John">John</li>
+                <li><input type="checkbox" v-model="checkName" value="Cathy">Cathy</li>
+                <li><input type="checkbox" v-model="checkName" value="Max">Max</li>
+                <p>check name: {{checkUsers}}</p>
+            </ul>
+        </div>
+        <div class="py-2">
+            <select v-model="contry">
+                <option value="Taiwan">Taiwan</option>
+                <option value="Japan">Japan</option>
+                <option value="Korea">Korea</option>
+            </select>
+            <p>select contry: {{contry}}</p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script>
+        let app= new Vue({
+            el: "#app",
+            data: {
+                message: "",              
+                checked: true,
+                checkName: [],
+                contry: [],
+            },
+            computed: {
+                checkUsers(){
+                    return this.checkName.toString();
+                }
+            },
+           
+        })
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <title>transition</title>
+    <style>
+        /* Vue:
+        1.<transition> 標籤包住愈變化 DOM
+        2.取個 name (attr)
+        3.設定 css 動畫
+          {name}-enter, {name}-leave-to : 開頭/結尾
+          {name}-enter-active, {name}-leave-active : 中間動畫 */
+
+        .box{
+            width: 100px;
+            height: 100px;
+            background: #ffae00;
+        }
+        /* .fade-enter, .fade-leave-to{
+            opacity: 0;
+        }
+        .fade-enter-active, .fade-leave-active{
+            transition: opacity .5s;
+        } */
+        
+        .fade-enter{
+            opacity: 0;
+            transform: scale(.5);
+        }
+        .fade-leave-to{
+            opacity: 0;
+            transform: scale(2);
+        }
+        .fade-enter-active{
+            transition: all .5s;
+        }
+        .fade-leave-active{
+            transition: all 1s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="container">
+        <div class="py-2">
+            <button type="button"
+                    class="btn btn-primary"
+                    @click="showBox = !showBox">show/hide box</button>
+        </div>
+        <transition name="fade">
+            <div class="box"
+             v-if="showBox"></div>
+        </transition>
+        
+    </div>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: "#app",
+            data: {
+                showBox: false,
+            },
+        })
+    </script>
+</body>
+</html>

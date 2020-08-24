@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>slider timer 2</title>
+    <style>
+        ul, li{
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .object_fit{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        #box{
+            width: 300px;
+            height: 260px;
+            margin: 0 auto;
+            background: coral;
+            position: relative;
+            overflow: hidden;
+        }
+        #box>ul{
+            width: 2100px;
+            height: 100%;
+            position: absolute;
+            display: flex;
+            left: -300px;
+            top: 0;
+        }
+        #box>ul>li{
+            width: 300px;
+            height: 100%;
+        }
+        #dot_list{
+            display: flex;
+            width: 300px;
+            margin: 0 auto;
+        }
+        #dot_list li{
+            width: 40px;
+            height: 5px;
+            border-radius: 2px;
+            background: rgb(74, 135, 175);
+            margin: 20px 10px;
+        }
+        #dot_list li.active{
+            background: rgb(14, 40, 58);
+        }
+        .btn_box{
+            width: 300px;
+            margin: 10px auto;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="box">
+        <ul id="ul_list">
+            <li><img class="object_fit" src="images/news_5.jpg"></li>
+            <li><img class="object_fit" src="images/news_1.jpg"></li>
+            <li><img class="object_fit" src="images/news_2.jpg"></li>
+            <li><img class="object_fit" src="images/news_3.jpg"></li>
+            <li><img class="object_fit" src="images/news_4.jpg"></li>
+            <li><img class="object_fit" src="images/news_5.jpg"></li>
+            <li><img class="object_fit" src="images/news_1.jpg"></li>
+        </ul>
+    </div>
+    <div id="dot_list">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </div>
+    <div class="btn_box">
+        <button id="btn_pre" type="button" class="btn btn-primary">pre</button>
+        <button id="btn_next" type="button" class="btn btn-primary">next</button>
+    </div>
+
+    <script>
+
+        // 獲取圖片 li 的寬度，得到每次輪播移動多少像素
+        // 全頻要用 getComputedStyle
+        var imgWidth = parseFloat(document.querySelectorAll("#box>ul>li")[0].offsetWidth);
+        //定義當前輪播圖的下標(用來記錄下一次該展示第幾張圖片)
+        var index = 1; // 圖片從第一張開始 index==0 其實是最後一張圖片
+        //頁面小圓點高亮的下標
+        var num = 0;
+        var left = document.getElementById("btn_pre");
+        var right = document.getElementById("btn_next");
+        var liList = document.querySelectorAll("#box ul li");
+        var ul = document.getElementById("ul_list");
+        var spans = document.querySelectorAll("#dot_list li");
+
+        //開始進行輪播
+        box.timer = setInterval(showRight, 2000);
+        
+        left.onclick = function (e) {
+            //阻止事件冒泡的兼容寫法
+            e = e || window.event;
+            window.event ? e.cancelBubble = true : e.stopPropagation();
+            clearInterval(box.timer);
+            showLeft();
+        }
+
+        right.onclick = function (e) {
+            e = e || window.event;
+            window.event ? e.cancelBubble = true : e.stopPropagation();
+            clearInterval(box.timer);
+            showRight();
+        }
+
+        spansClick();
+
+        function fnMove(ele, obj, callback) {
+            //參數一:需要動態變化樣式的元素
+            //參數二:一個對象 其鍵為需要變化的css屬性名,值為css屬性目標值 例{fontSize:500,height:140,opacity:50}
+            //參數三:回調如果動畫結束 調用該函數
+
+            clearInterval(ele.timer);
+
+            //創建計時器動態的修改 目標元素的css屬性值
+            // 用ele存儲timer 目的不讓計時器number被釋放,導致無法阻止計時器
+            ele.timer = setInterval(function () {
+
+                var fnStop = false; //標記 判斷是否所有動畫都達到目標值
+
+                for (var attr in obj) { //遍歷對象 獲取到所有需要修改的屬性名和目標值
+                    if(attr == "left") {
+                        var curr = parseInt(getStyle(ele, attr));
+                    }    
+                    // 元素當前css屬性值 如果屬性是opacity 0 - 1
+                    // 因為我們的速度大於等於1 直接操作0-1小數不太好操作
+                    // 我們對他進行放大100倍操作
+                    // if(attr == "opacity"){
+                    //     curr = parseInt(getStyle(ele, attr)*100)
+                    // }else {
+                    //     curr = parseInt(getStyle(ele, attr))
+                    // }
+
+                    //定義一個速度 讓目標元素 每30毫秒增加5像素 直到達到目標值停止計時器(動畫結束)
+                    //減速運動 目標值(不變) - 減去當前值(越來越接近目標) 減出來的結果越來越小 除以6不要讓當前值一瞬間達到目標值
+                    var speed = (obj[attr] - curr)/6;
+                    //放大動作  0.3 => 1   -0.3 => -1 避免讓速度等於0
+                    speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed);
+
+                    if(speed > 0){
+                        fnStop = true;
+                    }
+
+                    // console.log(curr);
+                    // 動態改變css屬性值 
+                    // 如果是透明度 我們之前給他乘以100倍 這裏需要還原回0-1的數
+                    if(attr == "opacity"){
+                        ele.style[attr] = parseFloat((curr + speed)/100);
+                        //透明度兼容寫法 老版本瀏覽器透明度為0-100
+                        ele.style.filter = "alpha(opacity:"+(curr + speed)+ ")";
+                    }else {
+                        ele.style[attr] = curr + speed + "px"
+                    }
+
+                }
+                //所有動畫完成，調用回調函數（可選）
+                if (fnStop){
+                    clearInterval(ele.timer);
+                    if(callback){
+                        callback();
+                    }
+                }
+            }, 30)
+        }
+
+        function getStyle(ele, attr) {
+            //參數一：需要獲取的元素對象
+            //參數二：需要獲取的樣式屬性
+            //兼容寫法獲取 元素css樣式的值
+            //高版本瀏覽器getComputedStyle(元素，偽類),不是偽類設為null,返回的是一個CSS樣式聲明對象
+            if (window.getComputedStyle) {
+                sAttr = window.getComputedStyle(ele, null)[attr];
+            } else {
+                //低版本瀏覽器
+                sAttr = ele.currentStyle(sAttr);
+            }
+            return sAttr
+        }
+
+       
+        function showRight() {
+            index++;
+            num++;
+            if (num >= spans.length) { //spans為與展示圖片數量相同的小點數組
+            num = 0;
+            }
+            if (index >= liList.length) { //上一次已經展示了第一張(li最後一張)了,該展示第二張
+            // 直接設置css屬性left 是沒有動畫效果的 無縫的讓最後一張跳回 第1張
+            ul.style.left = -imgWidth + "px";
+            //改變index值 動畫效果的讓第一張移動到第二張
+            index = 2;
+            }
+            fnMove(ul, {left: -imgWidth * index})
+            activeSpan(num);  //點亮與圖片相對應的小圓點
+        }
+
+        function showLeft() {
+            index--;
+            num--;
+            if (num >= spans.length) { //spans為與展示圖片數量相同的小點數組
+            num = 0;
+            }
+            if (index >= liList.length) { //上一次已經展示了第一張(li最後一張)了,該展示第二張
+            // 直接設置css屬性left 是沒有動畫效果的 無縫的讓最後一張跳回 第1張
+            ul.style.left = -imgWidth + "px";
+            //改變index值 動畫效果的讓第一張移動到第二張
+            index = 2;
+            }
+            fnMove(ul, {left: -imgWidth * index})
+            activeSpan(num);  //點亮與圖片相對應的小圓點
+        }
+
+        //高亮小圓點方法
+        function activeSpan(num) {
+            for (var i = 0; i < spans.length; i++) {
+            spans[i].className = "";
+            }
+            spans[num].className = "active"
+        }
+
+        //給小圓點添加點擊
+        function spansClick() {
+            for (var i = 0; i < spans.length; i++) {
+                //記錄每個小圓點的下標
+                spans[i].index=i;
+                spans[i].onclick = function (e) {
+                    e = e || window.event;
+                    window.event ? e.cancelBubble = true : e.stopPropagation();
+                    //讀取每個小圓點的下標
+                    num = this.index;
+                    index = num + 1; //index永遠比num大1
+                    activeSpan(num);
+                    fnMove(ul, {left: -imgWidth * index})
+                }
+            }
+        }
+    </script>
+</body>
+</html>

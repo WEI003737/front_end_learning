@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <!-- bootstrap -->
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <title>component emit</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <div id="app" class="container">
+        <h2>Total: {{ total }}</h2>
+        <my_component @add-total="total++"></my_component>
+        <my_component></my_component>
+    </div>
+
+    <!-- vue -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+    
+    // 全域註冊
+    Vue.component("my_component", {
+        template: `
+        <div>
+            <h5>this is component</h5>
+            <button type="button"
+                    class="btn btn-primary"
+                    @click="addCount">you click: {{ count }}
+            </button>
+        </div>
+        `,
+        data () {
+            return {
+                count: 0,
+            }
+        },
+        methods: {
+            addCount () {
+                this.count ++;
+                this.$emit("add-total");
+            }
+        },
+
+    })
+
+        const app = new Vue({
+            el: "#app",
+            data: {
+                total: 0,
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Where my anagrams at?</title>
+</head>
+<body>
+    <script>
+        /* result:
+        anagrams('abba', ['aabb', 'abcd', 'bbaa', 'dada']) => ['aabb', 'bbaa']
+
+        anagrams('racer', ['crazer', 'carer', 'racar', 'caers', 'racer']) => ['carer', 'racer']
+
+        anagrams('laser', ['lazing', 'lazy',  'lacer']) => []
+        */
+        
+        function anagrams(a, b) {
+            let wordsData = b,
+                returnWords = [],
+                count = [],
+                result = [],
+                countKey = [];
+                
+            filter = reduceTeml(a.split(""));
+
+            if (Array.isArray(b)) {
+                filter = wordsData.forEach((item) => {
+                    let wordArr = item.split("");
+                    // console.log(wordArr);
+
+                    count = reduceTeml(wordArr);
+
+                    countKey = Object.keys(count);
+                    for (let i=0; i<countKey.length; i++){
+                        if (count[countKey[i]] == filter[countKey[i]]) {
+                            result.push("ture");
+                        }
+                    }
+                    if (result.length == countKey.length) {
+                        returnWords.push(item)
+                    }
+                    result = [];
+                })                
+            } else if (typeof(b) === "string") {
+                count = reduceTeml(wordsData.split(""));
+
+                countKey = Object.keys(count);
+                for (let i=0; i<countKey.length; i++){
+                    if (count[countKey[i]] == filter[countKey[i]]) {
+                        result.push("ture");
+                    }
+                }
+                if (result.length == countKey.length) {
+                    returnWords.push(wordsData)
+                }
+                // console.log(count);
+
+                // console.log("string");
+            }
+            return returnWords;
+        }
+
+        function reduceTeml (data) {
+            let result = [];
+            if (typeof(data)) {
+                result = data.reduce((all, alphabet) => {      
+                    all[alphabet] = all[alphabet] ? all[alphabet]+1 : 1;
+                    // console.log(all);
+                    return all;
+                }, {});
+                return result;
+            }
+            return;            
+        }
+        
+        /*大神解答*/
+
+        // 1
+        // String.prototype.sort = function() {
+        // return this.split("").sort().join("");
+        // };
+
+        // function anagrams(word, words) {
+        //     return words.filter(function(x) {
+        //         return x.sort() === word.sort();
+        //     });
+        // }
+
+        // function hashString(string) {
+        //     var output = {};
+        //     for (var chr in string) {
+        //         output[string[chr]] = string[chr];
+        //     }
+        //     return output;
+        // }
+
+        // function isAnagram(check, string) {
+        //     if (check.length !== string.length) return false;
+        //     var hash = hashString(check);
+        //     for (var i = 0; i < string.length; ++i) {
+        //         var exists = false;
+        //         if (string[i] in hash) exists = true;
+        //         if (!exists) return false;
+        //     }
+        //     return true; 
+        // }
+
+        // function anagrams(word, words) {
+        //     var output = [];
+        //     for (var i = 0; i < words.length; ++i) {
+        //         if (isAnagram(words[i], word) && isAnagram(word, words[i])) {
+        //             output.push(words[i]);
+        //         }
+        //     }
+        //     return output;
+        // }
+    </script>
+</body>
+</html>
