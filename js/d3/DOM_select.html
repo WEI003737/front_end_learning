@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DOM select</title>
+</head>
+<body>
+
+  <p>HEllo World!</p>
+  <h3>00</h3>
+  <h3>00</h3>
+  <h2></h2>
+  <ul></ul>
+
+  <!-- d3 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+  <script>
+
+    // 選擇集的方法主要有兩個：
+    // select: 單選
+    // selectAll: 多選
+    // 選擇器只是選取了dom而已，要再透過資料綁定才是真正的「擁有」資料
+
+    // 設定選擇集屬性的法方有以下6種：
+    // attr、classed、style、property、text、html
+
+    // 選擇集控制元素的方法：
+    // append: 增加元素
+    // insert: 在指定元素之前插入元素
+    // remove: 刪除選擇集中的元素
+
+    // 插入元素
+
+    var days = ['星期一', '星期二', '星期三', '星期四'];
+    
+    d3.select('p')
+    .style('color', 'red');
+
+    d3.select('body')
+    .selectAll('h3')
+    .text('HIHIHI');
+
+    d3.select('h2')
+    .text('HIHI');
+
+    d3.select('ul')
+    .selectAll('li')
+    .data('days')
+    .enter()
+    .append('li')
+    .text(function (d) { return d; });
+
+    // 繪製向量圖
+
+    var svg = d3.select('body')
+              .append('svg')
+              .attr('width', 400)
+              .attr('height', 400);
+    
+    svg.append('circle')
+    .attr('cx', '50px')
+    .attr('cy', '50px')
+    .attr('r', '50px')
+    .attr('fill', 'red');
+
+
+  </script>
+</body>
+</html>

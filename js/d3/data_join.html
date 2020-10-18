@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>data join</title>
+</head>
+<body>
+
+  <p></p>
+  <p></p>
+  <p></p>
+
+  <h6></h6>
+  <h6></h6>
+  <h6></h6>
+
+  <!-- d3 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+
+  <script>
+
+    // 資料綁定有兩個方法：data() 和 datum()
+    // datum: 「一筆」資料綁定給每一個元素
+    // data: 「多筆」資料各別對應給每一個元素
+
+    // ex1
+    var data = [0.26, 0, 0.5, 0.8, 0.13, 0.9];
+
+    var result = data
+      .filter(function(d){
+          return d > 0;
+      })
+      .sort(function(a, b){
+          return a - b;
+      })
+      .map(function(d, i){
+          return (d * 100) + '%';
+      });
+  
+    console.log(result);
+
+    // ex2
+    var p = d3.select('body').selectAll('p');
+
+    p.datum('data')
+    .text(function (d, i) {
+      return d + ' ' + i;
+    });
+
+    // ex3
+    var h6 = d3.select('body').selectAll('h6');
+
+    h6.data(['data 1', 'data 2', 'data 3'])
+    .text(function (d, i) {
+      return d + ' index: ' + i;
+    })
+
+  </script>
+  
+  
+</body>
+</html>

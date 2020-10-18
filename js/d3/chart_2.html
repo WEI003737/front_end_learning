@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>chart</title>
+</head>
+<body>
+
+  <button id="drawBtn">draw</button>
+
+  <!-- d3 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+  <script>
+    /*把文字弄出來*/
+
+    var drawBtn = document.getElementById('drawBtn');
+
+    // var dataSet = [70, 130, 120, 95, 80, 170, 143];
+    var width = 400;
+    var height = 400;
+    var padding = {
+      top: 20,
+      bottom: 20,
+      right: 20,
+      left: 20
+    };
+    var graphicHeight = height - padding.top - padding.bottom;
+    var rectEachDistance = 35;
+    var rectWidth = 30;
+    var maxValue = 200;
+
+    var svg = d3.select('body')
+    .append('svg')
+    .attr('width', width)
+    .attr('height', height);
+
+    function fillRect (target) {
+      target.attr('fill', 'steelblue')
+      .attr('x', function (d, i) {
+        return rectWidth + rectEachDistance * i;
+      })
+      .attr('y', function (d) {
+        return height - padding.bottom - d;
+      })
+      .attr('width', rectWidth)
+      .attr('height', function (d) {
+        return d;
+      });
+
+    };
+
+    function setText (target) {
+      target.attr('fill', 'black')
+      .attr('font-size', '14px')
+      .attr('text-anchor', 'middle')
+      .attr('x', function (d, i) {
+        return rectWidth + rectEachDistance * i;
+      })
+      .attr('y', function (d) {
+        return height - padding.bottom - d;
+      })
+      .attr('dx', rectWidth/2)
+      .attr('dy', '-.5rem')
+      .text(function (d) {
+        return d;
+      });
+    };
+
+    function draw (data) {
+      let updateRect = svg.selectAll('rect').data(data);
+      let enterRect = updateRect.enter();
+      let exitRect = updateRect.exit();
+      
+      let updateText = svg.selectAll('text').data(data);
+      let enterText = updateText.enter();
+      let exitText = updateText.exit();
+
+      fillRect(updateRect);
+      fillRect(enterRect.append('rect'));
+      exitRect.remove();
+
+      setText(updateText);
+      setText(enterText.append('text'));
+      exitText.remove();
+
+
+    };
+
+    function getData () {
+      let dataSet = [];
+      for (let i=0; i<7; i++) {
+        dataSet.push(rand(0, 200));
+      };
+      return dataSet;
+      
+    };
+
+    function rand (min, max) {
+      return Math.floor(Math.random() * (max - min) + min) + 1;
+    };
+
+    drawBtn.addEventListener('click', function () {
+      console.log('click');
+      draw(getData());
+    });
+   
+
+  </script>
+  
+</body>
+</html>

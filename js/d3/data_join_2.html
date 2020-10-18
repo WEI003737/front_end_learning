@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>data join</title>
+</head>
+<body>
+
+  <!-- d3 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+
+  <script>
+    //D3中針對元素的操作定義了三個方法：
+    // Enter: 資料陣列長度大於元素數量，還不存在的元素稱為Enter（即將進入）
+    // Update: 資料陣列長度等於元素數量的部份稱為稱為Update（即將更新）
+    // Exit: 資料陣列長度小於元素數量，多餘元素的的部份稱為Exit（即將退出）
+
+    var data = ['天蠍座', '牡羊座', '水瓶座', '雙子座'];
+    var p = d3.select('body').selectAll('p');
+    var update = p.data(data);
+    var enter = update.enter();
+    var exit = update.exit();
+
+    update.text(function (d, i) {
+      return d + ' ' + i;
+    });
+
+    enter.append('p')
+    .text(function (d, i) {
+      return d + ' ' + i;
+    });
+
+    exit.remove();
+
+  </script>
+  
+  
+</body>
+</html>

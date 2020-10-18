@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>linear / ordinal</title>
+</head>
+<body>
+
+  
+  <!-- d3 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+
+<script>
+
+  /*
+    d3.min(): 取陣列資料的最小值
+    d3.max(): 取陣列資料的最大值
+
+    線性比例尺:
+    1.d3.scale.linear(): 輸入一個在定義域內的值，傳回值域內對應的值
+    2.如果輸入參數不在定義域範圍，仍然可以取到結果，不過是超出值域範圍的值，若希望把超出的部份給截掉的話可以使用clamp()
+
+    序數比例尺: (定義域和值域都是離散的)
+    1.d3.scale.ordinal()
+
+    */
+
+  // d3.scale.linear()
+  var dataSet = [10, 20, 35, 50, 70, 15];
+
+  var min = d3.min(dataSet);
+  var max = d3.max(dataSet);
+
+  var width = 400;
+  var height = 400;
+  var padding = 20;
+  var rectWidth = 30;
+  var rectEachDistance = 35;
+
+  var linear = d3.scale.linear()
+  .domain([min, max])
+  .range([0, 100])
+  .clame(true) //截掉超出部分
+
+  var svg = d3.select('body')
+  .append('svg')
+  .attr('width', width)
+  .attr('height', height);
+
+  svg.selectAll('rect')
+  .data(dataSet)
+  .enter()
+  .append('rect')
+  .attr('fill', 'steelblue')
+  .attr('x', function (d, i) {
+    return padding + rectEachDistance * i;
+  })
+  .attr('y', function (d) {
+    return height - padding - linear(d);
+  })
+  .attr('width', rectWidth)
+  .attr('height', function (d) {
+    return linear(d);
+  })
+
+  // d3.scale.ordinal()
+  // ex.1
+  var index = [0, 1, 2, 3, 4];
+  var color = ['blue', 'green', 'red', 'yellow', 'black'];
+
+  var ordinal = d3.scale.ordinal()
+  .domain(index)
+  .range(color)
+  
+  console.log(ordinal(0)); //blue
+
+  // ex.2
+  var index = ['a', 'b', 'c', 'd', 'e'];
+  var width = 80;
+
+  var ordinal = d3.scale.ordinal()
+  .domain(index)
+  .rangePoint(0, width);
+
+
+
+
+</script>
+  
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>chart</title>
+</head>
+<body>
+
+  <!-- d3 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+  <script>
+
+    var dataSet = [70, 130, 120, 95, 80, 170, 143];
+    var width = 400;
+    var height = 400;
+    var padding = {
+      top: 20,
+      bottom: 20,
+      right: 20,
+      left: 20
+    };
+    var graphicHeight = height - padding.top - padding.bottom;
+    var rectEachDistance = 35;
+    var rectWidth = 30;
+    var maxValue = 200;
+
+    var svg = d3.select('body')
+    .append('svg')
+    .attr('width', width)
+    .attr('height', height);
+
+    var rect = svg.selectAll('rect')
+    .data(dataSet)
+    .enter()
+    .append('rect')
+    .attr('fill', 'steelblue')
+    .attr('x', function (d, i) {
+      return rectWidth + rectEachDistance * i;
+    })
+    .attr('y', function (d) {
+      return height - padding.bottom - d;
+    })
+    .attr('width', rectWidth)
+    .attr('height', function (d) {
+      return d;
+    });
+
+    // <text> 標籤裡具有 x、y、dx、dy、rotate、textLength、lengthAdjust 屬性
+    var text = svg.selectAll('text')
+    .data(dataSet)
+    .enter()
+    .append('text')
+    .attr('fill', 'white')
+    .attr('font-size', '14px')
+    .attr('text-anchor', 'middle')
+    .attr('x', function (d, i) {
+      return rectWidth + rectEachDistance * i;
+    })
+    .attr('y', function (d) {
+      return height - padding.bottom - d;
+    })
+    .attr('dx', rectWidth/2)
+    .attr('dy', '1rem')
+    .text(function (d) {
+      return d;
+    });
+
+
+  </script>
+  
+</body>
+</html>
