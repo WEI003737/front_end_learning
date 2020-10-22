@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>li list type</title>
+
+    <!-- list-style-type:outside is not working in chrome -->
+
+    <style>
+        
+        *{
+            box-sizing: border-box;
+        }
+        .wrapper{
+            width: 800px;
+            margin: auto;
+            padding-left: 1rem;
+            background: #ffdb8c;
+        }
+        li{
+            font-size: 14px;        /* set font size of list item and bullet here */
+            list-style-type: none; /* removes default bullet */
+            position: relative;      /* positioning context for bullet */
+        }
+        li:before{
+            content: "\2219";    /* escaped unicode character */
+            font-size: 2.5rem;    /* the default unicode bullet size is very small */
+            line-height: 0;        /* kills huge line height on resized bullet */
+            position: absolute;  /* position bullet relative to list item */
+            top: .5rem;           /* vertical align bullet position relative to list item */
+            left: -.8rem;            /* position the bullet L- R relative to list item */
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+
+        <li>參加抽卡請先登入udn會員（免費加入udn會員）</li>
+
+        <li>每人每日可以給一次罐罐，給完罐罐可穫得貓咪的回禮</li>
+    
+        <li>給10次罐罐，貓咪會額外給出10點U利點數回禮；給20次罐罐，贈U點30點；給30次罐罐，贈U點50點</li>
+    
+        <li>次月15號前發送貓咪的回禮</li>
+    
+        <li>額外獎項每月更新於此，不另行通知</li>
+    
+        <li>本月貓咪回禮<br>【】1名、【家樂福禮券300元】10名、【7-11購物金200元】30名、【U利點數1,000點】2名、【U利點數500點】15名、【U利點數100點】60名、【U利點數30點】1800名、【明天再來】
+        </li>
+
+    </div>
+    
+</body>
+</html>
