@@ -58,7 +58,7 @@
           }, true);
       };
       function fb_login() {
-          var locationStr = "https://www.facebook.com/v7.0/dialog/oauth?response_type=code,token&client_id=267846550050865&redirect_uri={導向url}&scope=email";
+          var locationStr = "https://www.facebook.com/v7.0/dialog/oauth?response_type=code,token&client_id={app_id}&redirect_uri={導向url}&scope=email";
           top.location = locationStr;
       };
       function fb_valid(response, accessToken) {
@@ -89,7 +89,7 @@
           }
           var imageUrl = 'http://graph.facebook.com/' + response.id + '/picture';
           $.ajax({
-              url: "/hero-api.php?code="+accessToken,
+              url: "/{api.php}?code="+accessToken,
               type: "GET",
               error: function() {
                   alert('系統忙碌中');

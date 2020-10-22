@@ -11,6 +11,6 @@
   $helper = $fb->getRedirectLoginHelper();
   
   $permissions = ['email'];
-  $loginUrl = $helper->getLoginUrl('http://event.udn.com/teatravel/demo2020/fb-callback.php', $permissions);
+  $loginUrl = $helper->getLoginUrl('http://{url}', $permissions);
   
   echo '<a href="' . htmlspecialchars($loginUrl) . '">Log in with Facebook!</a>';
