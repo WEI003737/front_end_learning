@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>path</title>
+</head>
+
+<style>
+ 
+</style>
+
+<body>
+  <!-- d3 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+  <script>
+
+    /*
+    「內插」(Interpolation)模式，可以運算出各種不同的線段繪圖方式；總共有13種模式。
+    */
+
+    // 線產生器
+    var width = 450;
+    var height = 800;
+
+    var svg = d3.select('body').append('svg')
+    .attr({
+      width: width,
+      height: height
+    });
+
+    var lines = [
+      [80, 80],
+      [200, 100],
+      [200, 200],
+      [100, 200],
+      [100, 150]
+    ];
+
+    var linePath = d3.svg.line();
+
+    svg.append('path')
+    .attr({
+      d: linePath(lines),
+      stroke: 'black',
+      fill: 'none'
+    });
+
+    // --------------------------------------------------
+
+    var lines2 = [80, 120, 160, 200, 240, 280, 320];
+
+    var linePath2 = d3.svg.line()
+    .x(function (d) {
+      return d
+    })
+    .y(function (d, i) {
+      return i % 2 == 0 ? 240 : 320
+    });
+
+    // linePath2.interpolate('cardinal'); // 曲線弧度
+    linePath2.interpolate('linear-closed'); //連回原點
+
+    svg.append('path')
+    .attr({
+      d: linePath2(lines2),
+      stroke: 'black',
+      fill: 'none'
+    });
+
+    // 區域產生器
+    var dataSet = [80,120,130,70,60,90];
+
+    var areaPath = d3.svg.area()
+    .x(function (d,i) { return 50 + i * 80})
+    .y0(function (d,i) { return 500 })
+    .y1(function (d,i) { return 500  - d});
+      
+    svg.append('path')
+    .attr({
+      d: areaPath(dataSet),
+      stroke: 'black',
+      fill: '#ffae00'
+    });
+
+  </script>
+  
+</body>
+</html>
