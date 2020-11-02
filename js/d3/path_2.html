@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>path arc</title>
+</head>
+
+<style>
+ 
+</style>
+
+<body>
+  <!-- d3 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+  <script>
+
+    var width = 400;
+    var height = 400;
+    var svg = d3.select('body').append('svg')
+    .attr({
+      width: width,
+      height: height
+    })
+
+    var dataSet = [
+      {
+      startAngle: 0,
+      endAngle: Math.PI * 0.6
+      },
+      {
+      startAngle: Math.PI * 0.6,
+      endAngle: Math.PI
+      },
+      {
+      startAngle: Math.PI,
+      endAngle: Math.PI * 1.7
+      },
+      {
+      startAngle: Math.PI * 1.7,
+      endAngle: Math.PI * 2
+      }
+    ];
+
+    var colorArr = ['#587791', '#81a7a6', '#efc57f', '#de6868'];
+
+    var arcPath = d3.svg.arc()
+    .innerRadius(50)
+    .outerRadius(100);
+
+    svg.selectAll('path')
+    .data(dataSet)
+    .enter()
+    .append('path')
+    .attr({
+      d: function (d) { return arcPath(d) },
+      transform: 'translate(250, 250)',
+      stroke: 'white',
+      'stroke-width': '1px',
+      fill: function (d, i) { return colorArr[i] }
+    });
+
+    svg.selectAll('text')
+    .data(dataSet)
+    .enter()
+    .append('text')
+    .attr({
+      transform: function (d) { return 'translate(250, 250)' + 'translate(' + arcPath.centroid(d) + ')' },
+      'text-anchor': 'middle',
+      'fill': 'white'
+    })
+    .text( function (d) {
+      return Math.floor((d.endAngle - d.startAngle) * 180 / Math.PI) + '°';
+    });
+
+  </script>
+  
+</body>
+</html>

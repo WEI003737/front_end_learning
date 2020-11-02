@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>path arc</title>
+</head>
+
+<style>
+ 
+</style>
+
+<body>
+  <!-- d3 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+  <script>
+
+    /*
+    D3的符號產生器內建了
+    「圓型(circle)」
+    「十字(cross)」
+    「鑽石(diamond)」
+    「方型(square)」
+    「倒三角(triangle-down)」
+    「正三角(triangle-up)」六種圖型
+    */
+
+    var width = 400;
+    var height = 400;
+    var svg = d3.select('body').append('svg')
+    .attr({
+      width: width,
+      height: height
+    });
+
+    var dataSet = ['circle', 'cross', 'diamond', 'square', 'triangle-down', 'triangle-up'];
+
+    var symbol = d3.svg.symbol()
+    .size( function (d) { return 200 })
+    .type( function (d, i) { return d });
+
+    svg.selectAll('path')
+    .data(dataSet)
+    .enter()
+    .append('path')
+    .attr({
+      d: function (d) { return symbol(d) },
+      transform: function (d, i){
+        return 'translate(' + (50 + i* 50) + ', 20)';
+      },
+      fill: 'black'
+    })
+
+  </script>
+  
+</body>
+</html>
