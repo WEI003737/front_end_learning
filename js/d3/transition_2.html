@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>transition</title>
+</head>
+
+<style>
+  .axis line {
+    fill: none;
+    stroke: rgba(0, 0, 0, .1);
+    shape-rendering: crispEdges;
+  }
+  .axis path {
+    fill: none;
+    stroke: black;
+    shape-rendering: crispEdges;
+  }
+  .axis text {
+    font-family: sans-serif;
+    font-size: 11px;
+  }
+
+</style>
+
+<body>
+  <!-- d3 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+  <script>
+
+    var startWidth = 100
+    var endWidth = 300
+
+    var svg = d3.select('body').append('svg')
+    .attr({
+      width: 1000,
+      height: 1000
+    });
+
+    svg.append('rect')
+    .attr({
+      fill: '#ffae00',
+      x: 10,
+      y: 10,
+      width: startWidth,
+      height: 30
+    });
+
+    svg.append('text')
+    .attr({
+      fill: 'white',
+      x: startWidth,
+      y: 10,
+      dy: '1.2rem',
+      'text-anchor': 'end',
+    })
+    .text(startWidth);
+
+    // d3.transition()
+    // .duration(1500)
+    // .tween('move', function(){
+    //   return function(t){
+
+    //   // ### 用 interpolate 簡化
+    //     var interpolate = d3.interpolate(startWidth, endWidth);
+    //     var num = interpolate(t);
+    //     // var num = startWidth + t * (endWidth - startWidth);
+    //     // t為0時等於startWidth，t為1時等於endWidth
+    //   // ###
+    
+    //     d3.select('rect')
+    //       .attr('width', num);
+        
+    //     d3.select('text')
+    //       .attr('x', num)
+    //       .text(Math.floor(num));
+    //   }
+    // });
+
+    svg.transition()
+    .selectAll('rect')
+    .each('start', function(d,i){
+      console.log('start');
+    })
+    .each('end', function(d,i){
+      console.log('end');
+    })
+    .attr('width', 300);
+
+    svg.transition()
+    .selectAll('text')
+    .each('start', function(d,i){
+      console.log('start');
+    })
+    .each('end', function(d,i){
+      console.log('end');
+    })
+    .attr('x', 300);
+    
+  </script>
+  
+</body>
+</html>

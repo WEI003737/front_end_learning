@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>interpolate</title>
+</head>
+
+<style>
+  
+</style>
+
+<body>
+  <!-- d3 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+  <script>
+
+    /*
+    可以放入陣列資料
+    d3.interpolate(a, b)
+    d3.interpolateNumber(a, b)
+    d3.interpolateRgb(a, b)
+    d3.interpolateRound(a, b) 取整數
+    d3.interpolateString(a, b) 回傳字串
+    */
+
+    var color1 = d3.rgb(40, 80, 0);
+    var color2 = d3.rgb('red');
+    var color3 = d3.rgb('rgb(0,255, 255)');
+
+    console.log(color2.hsl());
+    console.log(color3);
+    console.log(color3.darker(2));
+    console.log(color3.darker(2).toString());
+    console.log(color1.toString());
+    console.log(color1.brighter(2).toString());
+
+    var color4 = d3.hsl(40, 80, 0);
+    var color5 = d3.hsl('red');
+    var color6 = d3.hsl('rgb(0,255, 255)');
+
+
+  /*
+  要計算介於兩個顏色之間的顏色，可以使用內插(Interpolation)
+  輸入參數的範圍是0~1，為0時輸出a、為1時輸出b，介於之間的數字會計算出相對的顏色
+  */
+
+  var a = d3.rgb('blue');
+  var b = d3.rgb('green');
+  var interpolate = d3.interpolate(a, b);
+
+  console.log(interpolate(0));
+  console.log(interpolate(1));
+  console.log(interpolate(0.8));
+
+  </script>
+  
+</body>
+</html>
