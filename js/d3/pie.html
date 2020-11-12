@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>transition</title>
+  <title>pie</title>
 </head>
 
 <style>
@@ -78,6 +78,14 @@
     .value(function (d) {
       return d[1];
     });
+    
+    // 1/4圓
+    // let pie = d3.layout.pie()
+    // .startAngle(0)
+    // .endAngle(Math.PI * 0.5)
+    // .value(function (d) {
+    //   return d[1];
+    // });
 
     let pieData = pie(dataSet);
     let outerRadius = width / 3;
@@ -103,15 +111,13 @@
       }
     });
 
-    svg.selectAll('text')
-    .data(pieData)
-    .enter()
+    svg.selectAll('g')
     .append('text')
     .attr({
       transform: function (d) {
         let x = arc.centroid(d)[0] * 1.4;
         let y = arc.centroid(d)[1] * 1.4;
-        return 'translate(' + (x + width / 2) + ',' + (y + height / 2) +')'
+        return 'translate(' + x + ',' + y + ')'
       },
       'text-anchor': 'middle',
       'fill': 'white'
@@ -121,7 +127,40 @@
       return percent.toFixed(1) + '%';
     });
 
-    
+    svg.selectAll('g')
+    .append('text')
+    .attr({
+      transform: function (d) {
+        let x = arc.centroid(d)[0] * 2.5;
+        let y = arc.centroid(d)[1] * 2.5;
+        return 'translate(' + x + ',' + y +')'
+      },
+      'text-anchor': 'middle'
+    })
+    .text(function (d) {
+      return d.data[0];
+    });
+
+    svg.selectAll('g')
+    .append('line')
+    .attr({
+      stroke: 'black',
+      x1: function (d) {
+        return arc.centroid(d)[0] * 2
+      },
+      x2: function (d) {
+        return arc.centroid(d)[0] * 2.2
+      },
+      y1: function (d) {
+        return arc.centroid(d)[1] * 2
+      },
+      y2: function (d) {
+        return arc.centroid(d)[1] * 2.2
+      },
+    })
+    .text(function (d) {
+      return d.data[0];
+    });
     
   </script>
   
