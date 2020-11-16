@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>select</title>
+</head>
+
+<style>
+  .box{
+    width: 100px;
+    height: 100px;
+    margin-bottom: 2rem;
+    background: #ffae00;
+    color: blanchedalmond;
+    line-height: 100px;
+    text-align: center;
+    text-shadow: 0 0 5px #000;
+  }
+</style>
+
+<body>
+
+  <div id="click" class="box">click me</div>
+  <div id="mouseover" class="box">touch me</div>
+  <div id="mousemove" class="box">touch me</div>
+
+  <!-- d3 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+  <script>
+
+    /*
+    滑鼠事件：
+    click 點擊
+    mouseover 游標移入
+    mousemove 游標移動
+    mousedown 滑鼠點擊按下
+    mouseup 滑鼠點擊放開
+    */
+  
+    let click = d3.select('#click')
+    .on('click', function () {
+      d3.select(this).text('oops')
+    });
+
+    let mouseover = d3.select('#mouseover')
+    .on('mouseover', function () {
+      d3.select(this).text('wow!!')
+    });
+
+    let mousemove = d3.select('#mousemove')
+    .on('mousemove', function () {
+      d3.select(this).text('moving')
+    });   
+
+  </script>
+  
+</body>
+</html>
