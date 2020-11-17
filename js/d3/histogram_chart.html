@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>histogram chart</title>
+</head>
+<body>
+
+
+  <!-- d3 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+  <script>
+
+    /*
+    直方圖 layout：d3.layout.histogram()。
+
+    histogram.range([min, max]) 設定資料分佈的範圍
+    histogram.bins(count) 設定長條圖個數
+    histogram.frequency(bool) true為數量、false為機率
+    */
+   
+    let rand = d3.random.normal(170, 10);
+
+    let dataSet = [];
+    for(let i=0; i<100; i++) {
+      dataSet.push(rand());
+    };
+
+    let width = 500;
+    let height = 380;
+    let padding = 30;
+
+    let svg = d3.select('body')
+    .append('svg')
+    .attr({
+      width: width,
+      height: height
+    });
+
+    let binNum = 10;
+    let rangeMin = 130;
+    let rangeMax = 210;
+
+    let histogram = d3.layout.histogram()
+    .range([rangeMin, rangeMax])
+    .bins(binNum)
+    .frequency(true);
+
+    // x為資料區間的下限值、dx為區間的長度、y為落到此區間的數量
+    let hisData = histogram(dataSet);
+
+    let xAxisWidth = width - padding * 2;
+    let yAxisWidth = 450;
+    let xTicks = hisData.map(function (d) {
+      return d.x
+    });
+
+    // rangeRoundBands可以選擇加入第2及第3個參數，第2個參數是所有區間之間的間距(padding)、第3個參數是單獨設定最左和最右兩邊的間距。
+
+    let xScale = d3.scale.ordinal()
+    .domain(xTicks)
+    .rangeRoundBands([0, xAxisWidth], 0.1, 0.3);
+
+    let yScale = d3.scale.linear()
+    .domain([d3.min(hisData, function (d) {
+      return d.y
+    }),
+    d3.max(hisData, function (d) {
+      return d.y
+    })])
+    .range([5, yAxisWidth]);
+
+    let xAxis = d3.svg.axis()
+    .scale(xScale)
+    .orient('bottom');
+
+    svg.append('g')
+    .attr({
+      class: 'xAxis',
+      transform: 'translate(' + padding + ',' + (height - padding) + ')'
+    })
+    .call(xAxis);
+
+    let gRect = svg.append('g')
+    .attr('transform', 'translate(' + padding + ',' + (-padding) + ')');
+    
+    gRect.selectAll('rect')
+    .data(hisData)
+    .enter()
+    .append('rect')
+    .attr({
+      class: 'rect',
+      x: function (d,i) {
+        return xScale(d.x)
+      },
+      y: function (d,i) {
+        return height - yScale(d.y)
+      },
+      width: function(d,i){
+        return xScale.rangeBand()
+      },
+      height: function(d){
+        return yScale(d.y)
+      }
+    });
+    
+
+  </script>
+  
+</body>
+</html>
