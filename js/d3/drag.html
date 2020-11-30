@@ -6,19 +6,6 @@
   <title>drag</title>
 </head>
 
-<style>
-  .box{
-    width: 100px;
-    height: 100px;
-    margin-bottom: 2rem;
-    background: #ffae00;
-    color: blanchedalmond;
-    line-height: 100px;
-    text-align: center;
-    text-shadow: 0 0 5px #000;
-  }
-</style>
-
 <body>
 
   <!-- d3 -->
@@ -26,11 +13,11 @@
   <script>
 
     /*
-    d3.behavior：拖曳、縮放(zoom)
+    d3.behavior：拖曳(drag)、縮放(zoom)
     建立拖曳行為後首先要使用origin設定拖曳的起點座標。
 
     拖曳事件：
-    ragstart 拖曳開始事件
+    dragstart 拖曳開始事件
     dragend 拖曳結束事件
     drag 拖曳事件（開始及結束之間）
     */

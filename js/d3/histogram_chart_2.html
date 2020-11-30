@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>histogram chart</title>
+  <title>histogram chart (line)</title>
   <style>
     .xAxis path, .xAxis line, .yAxis path, .yAxis line{
       fill: none;
@@ -14,32 +14,28 @@
       font-family: sans-serif;
       font-size: 11px;
     }
-    .rect {
-      fill: steelblue;
+    .linePath {
+      stroke: steelblue;
+      stroke-width: 2px;
+      fill: none;
     }
   </style>
 </head>
 <body>
 
-
   <!-- d3 -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
   <script>
 
-    /*
-    直方圖 layout：d3.layout.histogram()。
-
-    histogram.range([min, max]) 設定資料分佈的範圍
-    histogram.bins(count) 設定長條圖個數
-    histogram.frequency(bool) true為數量、false為機率
-    */
-   
+    //線直方圖 
     let rand = d3.random.normal(170, 10);
 
     let dataSet = [];
     for(let i=0; i<100; i++) {
       dataSet.push(rand());
     };
+
+    console.log(dataSet);
 
     let width = 500;
     let height = 380;
@@ -61,16 +57,13 @@
     .bins(binNum)
     .frequency(true);
 
-    // x為資料區間的下限值、dx為區間的長度、y為落到此區間的數量
     let hisData = histogram(dataSet);
 
     let xAxisWidth = width - padding * 2;
-    let yAxisWidth = 450;
+    let yAxisWidth = height - padding * 2;
     let xTicks = hisData.map(function (d) {
       return d.x
     });
-
-    // rangeRoundBands可以選擇加入第2及第3個參數，第2個參數是所有區間之間的間距(padding)、第3個參數是單獨設定最左和最右兩邊的間距。
 
     let xScale = d3.scale.ordinal()
     .domain(xTicks)
@@ -96,7 +89,7 @@
     let xAxis = d3.svg.axis()
     .scale(xAScale)
     .orient('bottom')
-    .ticks(binNum);
+    .ticks((rangeMax - rangeMin) / binNum);
 
     svg.append('g')
     .attr({
@@ -105,29 +98,22 @@
     })
     .call(xAxis);
 
-    let gRect = svg.append('g')
-    .attr('transform', 'translate(' + padding + ',' + (-padding) + ')');
+    let lineGenerator = d3.svg.line()
+    .x(function (d) {return xScale(d.x)})
+    .y(function (d) {return height - yScale(d.y)})
+    .interpolate('basis');
     
-    gRect.selectAll('rect')
-    .data(hisData)
-    .enter()
-    .append('rect')
+    let gLine = svg.append('g')
     .attr({
-      class: 'rect',
-      x: function (d,i) {
-        return xScale(d.x)
-      },
-      y: function (d,i) {
-        return height - yScale(d.y)
-      },
-      width: function(d,i){
-        return xScale.rangeBand()
-      },
-      height: function(d){
-        return yScale(d.y)
-      }
+      transform: 'translate(' + padding + ',' + (-padding) +　')'
     });
-    
+
+    gLine.append('path')
+    .attr({
+      class: 'linePath',
+      d: lineGenerator(hisData)
+    });
+        
 
   </script>
   

@@ -41,7 +41,7 @@
   var linear = d3.scale.linear()
   .domain([min, max])
   .range([0, 100])
-  .clame(true) //截掉超出部分
+  .clamp(true); //截掉超出部分
 
   var svg = d3.select('body')
   .append('svg')
@@ -81,7 +81,7 @@
 
   var ordinal = d3.scale.ordinal()
   .domain(index)
-  .rangePoint(0, width);
+  .rangePoints(0, width);
 
 
 
