@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>example taiwan map</title>
+  <style>
+    .counties {
+        fill:#33474e;
+    }
+    .counties :hover {
+        fill: #7f9ca7;
+        transition: 0.5s;
+    }
+    .county-borders {
+        fill: none;
+        stroke: #fff;
+        stroke-width: 0.5px;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <svg width="500" height="500" style="border:1px solid #00000060;">
+      <g class="countries"></g>
+      <path class="country_borders"></path>
+    </svg>
+  </div>
+
+  <!-- d3 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+  <!-- TopoJSON -->
+  <script src="https://unpkg.com/topojson@3"></script>
+  <!-- vue -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+        countriesData: [], 
+      },
+      mounted () {
+        fetch('COUNTY_MOI_1090820_TopoJSON.json')
+        .then(res => res.json())
+        .then(result => {
+          this.countriesData = result;
+          this.draw(this.countriesData);
+        })
+      },
+      methods: {
+        draw (mapData) {
+          let projection = d3.geoMercator()
+          .center([123, 24])
+          .scale(5500); //縮放比例尺
+
+          let path = d3.geoPath(projection);
+
+          /*
+            topojson.feature ：將 TopoJSON 轉換成 GeoJSON 的格式。
+            topojson.mesh ：將 TopoJSON 中的 geometry 物件轉換成 GeoJSON 中的線段。
+          */
+
+          d3.select('g.countries')
+          .selectAll('path')
+          .data(topojson.feature(mapData, mapData.objects['COUNTY_MOI_1090820_TopoJSON']).features)
+          .enter()
+          .append('path')
+          .attr({
+            d: path
+          });
+
+          d3.select('path.country_borders')
+          .attr({
+            d: path(topojson.mesh(mapData, mapData.objects['COUNTY_MOI_1090820_TopoJSON'], function (a, b) { return a !== b; }))
+          });
+        },
+      }
+    });
+  </script>
+  
+</body>
+</html>
