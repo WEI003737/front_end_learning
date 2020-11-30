@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>css sprites</title>
+  <style>
+    .header{
+      display: flex;
+      height: 70px;
+      background: #ccc;
+    }
+    .icon{
+      width: 100px;
+      margin-right: 5px;
+      background: url('../images/icon.png') no-repeat;
+    }
+    .member{
+      width: 23px;
+      background-position: 0 center;
+    }
+    .cart{
+      width: 30px;
+      background-position: -30px center;
+    }
+    .shop{
+      width: 31px;
+      background-position: -69px center;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="icon member"></div>
+    <div class="icon cart"></div>
+    <div class="icon shop"></div>
+  </header>
+  
+</body>
+</html>
