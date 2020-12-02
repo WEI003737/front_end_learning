@@ -5,26 +5,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>example taiwan map</title>
   <style>
-    .counties {
-        fill:#33474e;
+    .map{
+      width: 100%;
+      height: 800px;
+      position: relative;
     }
-    .counties :hover {
-        fill: #7f9ca7;
-        transition: 0.5s;
+    .map svg{
+      width: 70%;
+      height: 100%;
+      position: absolute;
+      right: 0;
+      border: 1px solid #ccc;
     }
-    .county-borders {
-        fill: none;
-        stroke: #fff;
-        stroke-width: 0.5px;
+    .map svg path:hover{
+      fill: #ffae00;
     }
   </style>
 </head>
 <body>
   <div id="app">
-    <svg width="500" height="500" style="border:1px solid #00000060;">
-      <g class="countries"></g>
-      <path class="country_borders"></path>
-    </svg>
+    <div class="map">
+      <svg viewBox="0 0 800 600">
+        <g class="countries"></g>
+      </svg>
+    </div>
   </div>
 
   <!-- d3 -->
@@ -34,44 +38,75 @@
   <!-- vue -->
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <script>
+
+    /*
+    reference:
+    https://ithelp.ithome.com.tw/articles/10228744
+    [ D3.js ] 繪製臺灣地圖
+    https://ithelp.ithome.com.tw/articles/10223786?sc=pt 
+    
+    */
     const app = new Vue({
       el: '#app',
       data: {
-        countriesData: [], 
+        geometryData: []
       },
       mounted () {
-        fetch('COUNTY_MOI_1090820_TopoJSON.json')
-        .then(res => res.json())
-        .then(result => {
-          this.countriesData = result;
-          this.draw(this.countriesData);
-        })
+        this.getGeometryData();
       },
       methods: {
+        getGeometryData () {
+          fetch('COUNTY_MOI_1090820_TopoJSON.json')
+          .then(res => res.json())
+          .then(result => {
+            this.geometryData = result;
+            let mapData = this.geometryData;
+            console.log(topojson.feature(mapData, mapData.objects['COUNTY_MOI_1090820']).features);
+
+            this.draw(this.geometryData);
+          })
+        },
         draw (mapData) {
-          let projection = d3.geoMercator()
-          .center([123, 24])
-          .scale(5500); //縮放比例尺
-
-          let path = d3.geoPath(projection);
-
           /*
             topojson.feature ：將 TopoJSON 轉換成 GeoJSON 的格式。
             topojson.mesh ：將 TopoJSON 中的 geometry 物件轉換成 GeoJSON 中的線段。
           */
+          let vm = this;
+          let path = d3.geo.path().projection(
+            d3.geo
+            .mercator()
+            .center([121.3, 23.8])
+            .scale(12000)
+          );
+          let features = topojson.feature(mapData, mapData.objects['COUNTY_MOI_1090820']).features; 
+          let newFeatures = features;
+          fetch('citydata_taiwan.json')
+          .then(res => res.json())
+          .then(result => {
+            console.log(result);
+            
+            newFeatures.forEach(item => {
+              let addData = result.find(data => data.city == item.properties.COUNTYNAME);
+              item.properties.density = addData.density;
+            });
+          })
+          .then(result => {
+            let color = d3.scale.linear()
+            .domain([0,10000])
+            .range(['#ccc','#5E5E5E']);
 
-          d3.select('g.countries')
-          .selectAll('path')
-          .data(topojson.feature(mapData, mapData.objects['COUNTY_MOI_1090820_TopoJSON']).features)
-          .enter()
-          .append('path')
-          .attr({
-            d: path
-          });
-
-          d3.select('path.country_borders')
-          .attr({
-            d: path(topojson.mesh(mapData, mapData.objects['COUNTY_MOI_1090820_TopoJSON'], function (a, b) { return a !== b; }))
+            console.log(newFeatures);
+            d3.select('g.countries')
+            .selectAll('path')
+            .data(newFeatures)
+            .enter()
+            .append('path')
+            .attr({
+              d: path,
+              fill: function (d) {
+                return color(d.properties.density);
+              }
+            })
           });
         },
       }
