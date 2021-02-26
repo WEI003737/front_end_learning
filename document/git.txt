@@ -2,12 +2,21 @@
 $ git init
 
 --註冊檔案或目錄到索引--
+** 可用 git status 查看目前存放了哪些文件**
 
-$ git add <filepattern>
+#註冊指定檔案
+$ git add <file>
+#註冊指定目錄下檔案
+$ git add <directory>
+#註冊所有檔案
+$ git add .
 
-$ git add . //新增所有檔案
-$ git add -p <filepattern>
-$ git add -i <filepattern>
+#等同 git add .
+-A
+#只添加暫存區已有的文件(含刪除)，不添加新文件
+-u
+#選擇只註冊檔案中修改的其中一部分
+-p
 
 --
 
