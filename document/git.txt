@@ -24,3 +24,21 @@ $ git commit -m "first commit"
 $ git branch -M main
 $ git remote add origin https://github.com/WEI003737/test.git
 $ git push -u origin main
+
+--
+
+--新增分支--
+$git branch <branch name>
+
+--切換分支--
+$git checkout <branch name>
+
+--檢視提交紀錄--
+$git log --all
+$git log --graph --all #文字圖像
+
+--推送至遠端目錄--
+$git push -u origin <branch name>
+
+--checkout 遠端分支到本地分支--
+$git checkout -t <remote branch>
