@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ref / reactive / readonly</title>
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+  
+  <div id="app">
+
+    <div class="card">
+      <h1>ref: <span>{{ msg }}</span></h1>
+      <ul class="content">
+        <li>能定義任何型別的資料</li>
+        <li>不會做深層監聽</li>
+        <li>訪問資料需要.value</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h1>reactive: <span>{{ text.name }}</span></h1>
+      <button @click="add()">add reactive</button>
+      <ul class="content">
+        <li>只能定義{}、[]型別的資料</li>
+        <li>可做深層監聽</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h1>readonly: <span>{{ textReadonly.name }}</span></h1>
+      <button @click="addReadonly()">add readonly</button>
+      <ul class="content">
+        <li>只讀</li>
+      </ul>
+    </div>
+    
+  </div>
+
+  <script src="https://unpkg.com/vue@next"></script>
+  <script>
+    const { ref, reactive, readonly } = Vue;
+    const App = {
+      setup () {
+        const msg = ref(0); //能定義任何型別的資料 / 不會做深層監聽 / 訪問資料需要.value
+        const text = reactive({name: 'Alice'}); //只能定義{}、[]的資料 / 可做深層監聽
+        const textReadonly = readonly(text); //只讀
+
+        const add = () => {
+          text.name += '+';
+          console.log(msg);
+          console.log(text);
+        };
+        
+        const addReadonly = () => {
+          textReadonly.name += '+';
+          console.log(textReadonly);
+        };
+
+        return {
+          msg,
+          text,
+          textReadonly,
+          add,
+          addReadonly
+        }        
+      },
+    };
+
+    Vue.createApp(App).mount('#app');
+  </script>
+</body>
+</html>

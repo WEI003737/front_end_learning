@@ -1,0 +1,10 @@
+vue3
+1.不用以 this 取 data 跟 function
+2.寫在 setup 的資料不一定要讓 vue 綁定
+3.vuex 寫法: (vue-cli 裡又有點不一樣)
+  const store = createStore({
+    state () {
+      return {}
+    }
+  })
+4.vuex & router 接在創建實例後方 Vue.createApp(App).use(router).use(store).mount('#app');

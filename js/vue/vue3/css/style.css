@@ -1,0 +1,27 @@
+*{
+  box-sizing: border-box;
+}
+button{
+  padding: 5px 15px;
+  background: rgb(247, 235, 217);
+  border-radius: 6px;
+  border: none;
+}
+button:hover{
+  background: rgb(131, 152, 170);
+}
+button:focus{
+  outline: none;
+}
+.card{
+  margin: auto auto 20px;
+  padding: 20px 30px;
+  width: 350px;
+  background: rgb(198, 220, 228);
+  border-radius: 20px;
+}
+.content{
+  padding: 10px 30px;
+  background: #fff;
+  border-radius: 10px;
+}
