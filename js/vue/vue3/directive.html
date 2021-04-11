@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>directive</title>
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+  
+  <div id="app">
+    <p v-highlight="'yellow'">{{ msg }}</p>
+    
+  </div>
+
+  <script src="https://unpkg.com/vue@next"></script>
+  
+  <script>
+    const { ref} = Vue;
+    const App = {
+      setup () {
+        const msg = ref('訊息');
+      
+        return {
+          msg
+        }        
+      },
+    };
+
+    // vue 2.x
+    // Vue.directive('highlight', {
+    //   bind(el, binding, vnode) {
+    //     el.style.background = binding.value;
+    //   }
+    // });
+
+    const app = Vue.createApp(App);
+
+    app.directive('highlight', {
+      beforeMount(el, binding, vnode) {
+        el.style.background = binding.value;
+        console.log('before mount');
+        console.log(binding.value);
+      }
+    });
+    
+    app.mount('#app');
+  </script>
+</body>
+</html>

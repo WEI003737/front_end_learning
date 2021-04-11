@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>computed</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <style>
+    *{
+      box-sizing: border-box;
+    }
+    ul, li{
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .nav{margin: auto;
+      width: 300px;
+      background: #ccc;
+      border-radius: 10px;
+      text-align: center;
+      overflow: hidden;
+    }
+    .nav>li>a{
+      display: block;
+      padding: 10px;
+      background: rgb(56, 56, 56);
+      color: #fff;
+    }
+    .subnav{
+      height: 0;
+      background: rgb(240, 240, 240);
+      overflow: hidden;
+      transition: .5s;
+    }
+    .subnav>li{
+      height: 40px;
+      line-height: 40px;
+    }
+  </style>
+</head>
+<body>
+  
+  <div id="app">
+
+    <ul class="nav">
+      <li><a @click="open()">點我下拉</a>
+        <ul class="subnav" :style="{height:navHeight}">
+          <li v-for="lesson in lessons"
+              :key="lesson.name" :style="{color:lesson.status}">{{ lesson.name }}</li>
+        </ul>
+      </li>
+    </ul>
+    
+  </div>
+
+  <script src="https://unpkg.com/vue@next"></script>
+  <script>
+    const { ref, computed } = Vue;
+    const App = {
+      setup () {
+        const isOpen = ref(false);
+        const lessons = ref([
+          {name: '這是第一行', status: 'blue'},
+          {name: '這是第二行', status: 'blue'},
+          {name: '這是第三行我是粉紅色', status: 'red'},
+          {name: '這是第四行', status: 'blue'}
+        ]);
+
+        const navHeight = computed(() => {
+          return isOpen.value === true ? `${lessons.value.length * 40}px` : 0;
+        });
+
+        const open = () => {
+          isOpen.value = !isOpen.value;
+        };
+      
+        return {
+          isOpen,
+          lessons,  
+          navHeight,
+          open,
+        }        
+      },
+    };
+
+    Vue.createApp(App).mount('#app');
+  </script>
+</body>
+</html>
