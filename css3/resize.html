@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>resize</title>
+  <style>
+    *{
+      box-sizing: border-box;
+    }
+    .card{
+      padding: 20px;
+      max-width: 300px;
+      width: 200px;
+      min-width: 150px;
+      background: rgb(238, 171, 126);
+      border-radius: 20px;
+
+      /* 以下兩個要一起才會作用 */
+      resize: horizontal;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vel magna enim. Duis eu tincidunt ante, at aliquet elit. Maecenas suscipit ipsum eget bibendum posuere. Donec eget purus viverra, tincidunt neque consectetur, porta mi. Ut nisi tortor, suscipit sed aliquam in, fringilla vel erat. Nullam consequat nulla a lectus fringilla, id aliquam diam tristique. Morbi vehicula neque sed ligula ultricies, ut facilisis tellus ullamcorper. Donec vel ornare nisi, fermentum rutrum nisi.</div>
+  
+</body>
+</html>

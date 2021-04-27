@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>scroll padding top</title>
+  <style>
+    body{
+      margin: 0;
+      padding: 0;
+    }
+    :root{
+      --header-height: 50px;
+      scroll-padding-top: calc(var(--header-height) + 20px);
+      scroll-behavior: smooth;
+    }
+    .container{
+      position: relative;
+      margin: auto;
+      width: 300px;
+      text-align: justify;
+    }
+    .header{
+      position: sticky;
+      top: 0;
+      left: 0;
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      height: var(--header-height);
+      background: #ccc;
+      z-index: 100;
+    }
+    .header--anchor{
+      padding: 0 40px;
+      background: rgb(85, 85, 85);
+      color: #fff;
+      text-decoration: none;
+      line-height: var(--header-height);
+      cursor: pointer;
+    }
+    .header--anchor:hover{
+      background: rgb(49, 49, 49);
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <a class="header--anchor" href="#heading-to-title-1">TITLE 1</a>
+    <a class="header--anchor" href="#heading-to-title-2">TITLE 2</a>
+    <a class="header--anchor" href="#heading-to-title-3">TITLE 3</a>
+  </div>
+
+  <div class="container">
+    <section id="heading-to-title-1">
+      <h3 class="title">TITLE 1</h3>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin molestie congue arcu. Etiam egestas urna et cursus gravida. Aliquam nec mollis massa. Mauris pellentesque vestibulum diam, eget euismod tortor suscipit et. Curabitur et lacinia nunc. Sed tristique augue pretium pretium laoreet. Aliquam vitae felis mattis, faucibus ligula sit amet, dignissim sapien. Proin scelerisque arcu quis urna iaculis, non porttitor lacus commodo. Suspendisse finibus sodales nulla ut venenatis. Vivamus ac est et nunc suscipit facilisis. Cras iaculis sem neque, vel aliquet lacus tincidunt ut. Nulla vitae ultricies nibh, rhoncus tincidunt lacus.
+
+      Donec pulvinar, ligula a porttitor accumsan, turpis lectus condimentum quam, eget pulvinar mauris leo ac libero. Interdum et malesuada fames ac ante ipsum primis in faucibus. Donec blandit elementum libero sit amet maximus. Maecenas malesuada libero vel mauris tincidunt, quis lacinia justo venenatis. Suspendisse vitae metus a dui pellentesque luctus in non turpis. Nulla consectetur vitae libero vel elementum. Phasellus vitae velit felis. Etiam vel condimentum nisl, nec viverra massa. Cras justo lorem, lacinia at porta at, fringilla vitae tellus. Praesent sodales tellus imperdiet diam mollis, in vehicula nunc faucibus. Phasellus id nunc et ex ullamcorper commodo nec et massa. Ut at nibh vehicula, bibendum sem a, fringilla mauris. Ut egestas vel urna sed feugiat. Nunc aliquet maximus vestibulum. Curabitur nulla justo, iaculis ut efficitur sed, egestas vitae dolor.
+    </section>
+
+    <section id="heading-to-title-2">
+      <h3 class="title">TITLE 2</h3>
+      Fusce pretium hendrerit elit, sit amet bibendum ante aliquam non. Vestibulum ullamcorper augue eget cursus eleifend. Suspendisse mattis at mauris sed euismod. Nam lobortis arcu ut lectus varius semper. Donec sit amet orci diam. Cras dictum iaculis purus, vitae feugiat tortor fringilla ut. Interdum et malesuada fames ac ante ipsum primis in faucibus.
+      
+      Donec posuere elit nunc, aliquet iaculis massa lobortis non. Ut faucibus pretium semper. Quisque nunc ligula, molestie vulputate finibus at, pretium ac eros. Vestibulum condimentum enim non placerat consequat. Vestibulum a elit eu sapien tempus fringilla. Nam congue nunc porttitor volutpat congue. Fusce porta sit amet felis ac dictum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Suspendisse potenti.
+      
+      Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Vivamus molestie justo tellus, nec sollicitudin magna aliquet ut. Proin eleifend leo non cursus egestas. Nam quam lacus, laoreet at pulvinar at, euismod nec turpis. Duis massa est, pretium ac metus eget, vulputate euismod quam. Proin et lobortis neque, eget mattis dui. Sed lobortis leo sit amet turpis fermentum, in imperdiet justo molestie. Vivamus sodales vehicula dapibus. Sed accumsan turpis ex, et malesuada quam pharetra at. Duis vitae purus id mi egestas consequat. Curabitur pellentesque neque elit, quis consequat orci bibendum ac. Suspendisse quis hendrerit ante, at efficitur erat.
+    </section>
+
+    <section id="heading-to-title-3">
+      <h3 class="title">TITLE 3</h3>
+      Fusce pretium hendrerit elit, sit amet bibendum ante aliquam non. Vestibulum ullamcorper augue eget cursus eleifend. Suspendisse mattis at mauris sed euismod. Nam lobortis arcu ut lectus varius semper. Donec sit amet orci diam. Cras dictum iaculis purus, vitae feugiat tortor fringilla ut. Interdum et malesuada fames ac ante ipsum primis in faucibus.
+      
+      Donec posuere elit nunc, aliquet iaculis massa lobortis non. Ut faucibus pretium semper. Quisque nunc ligula, molestie vulputate finibus at, pretium ac eros. Vestibulum condimentum enim non placerat consequat. Vestibulum a elit eu sapien tempus fringilla. Nam congue nunc porttitor volutpat congue. Fusce porta sit amet felis ac dictum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Suspendisse potenti.
+      
+      Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Vivamus molestie justo tellus, nec sollicitudin magna aliquet ut. Proin eleifend leo non cursus egestas. Nam quam lacus, laoreet at pulvinar at, euismod nec turpis. Duis massa est, pretium ac metus eget, vulputate euismod quam. Proin et lobortis neque, eget mattis dui. Sed lobortis leo sit amet turpis fermentum, in imperdiet justo molestie. Vivamus sodales vehicula dapibus. Sed accumsan turpis ex, et malesuada quam pharetra at. Duis vitae purus id mi egestas consequat. Curabitur pellentesque neque elit, quis consequat orci bibendum ac. Suspendisse quis hendrerit ante, at efficitur erat.
+    </section>
+
+  </div>
+  
+</body>
+</html>
