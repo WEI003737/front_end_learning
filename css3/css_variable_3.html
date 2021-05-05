@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>css variable</title>
+  <style>
+    *{
+      box-sizing: border-box;
+    }
+    :root{
+      --h: 100;
+      --s: 50%;
+      --l: 50%;
+      --a: .5;
+    }
+    .button{
+      padding: 20px 40px;
+      border: none;
+      border-radius: 20px;
+      background: hsla(var(--h), var(--s), var(--l), var(--a));
+    }
+    .button:hover{
+      --s: 25%;
+    }
+  </style>
+</head>
+<body>
+
+  <button class="button">BUTTON</button>
+  
+</body>
+</html>

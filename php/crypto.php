@@ -14,6 +14,7 @@ function cryptoRandom($min, $max) {
   return $min + $rnd;
 }
 
-var_dump(cryptoRandom(0, 100));
+// var_dump(cryptoRandom(0, 100));
+var_dump('123');
 
 ?>
